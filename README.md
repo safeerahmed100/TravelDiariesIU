@@ -1,8 +1,10 @@
 # TravelDiariesIU
-Introduction
+# Introduction
+
 Travel Diary is designed as an easy-to-use travel companion, offering users the tools to organize and share their journeys effortlessly. At its core, the app aims to capture the genuine essence of travel by seamlessly integrating pictures, locations, and personal reflections. The application turns the process of journaling your travels into a smooth and enjoyable experience.
 With its user-friendly features, users can make their travel stories unique or interesting by giving them a unique title, theme, and cover. The app helps the user to feel more connected to the trip by letting them write about each day and share their stories. It’s like your personal travel diary where you can store all your moments and revisit them any time
-Key Features:
+
+# Key Features:
 1.	User Profiles:
 •	Registration/ Login
 •	And allow user to customize their profile
@@ -36,7 +38,7 @@ Key Features:
 9.	Feedback and Reporting:
 •	For users to report issues or provide suggestions.
 •	To gather insights into user behavior and preferences.
-Similar Apps:
+# Similar Apps:
 1.	Day One:
 •	Day One is a popular journaling app that allows users to create multimedia-rich entries, including photos and locations. It provides a clean and intuitive interface.
 
@@ -52,8 +54,8 @@ Similar Apps:
 5.	Snapchat Map:
 •	Snapchat's Map feature allows users to share their location with friends and discover Snaps from various locations, offering a real-time, map-based perspective.
 
-Technical Requirements:
-Frontend:
+## Technical Requirements:
+### Frontend:
 1.	Framework:
 •	React native 
 
@@ -89,7 +91,7 @@ Frontend:
 
 12.	Performance Optimization:
 •	Optimize front-end performance for fast loading times.
-Backend:
+## Backend:
 1.	Framework:
 .Net Core
 2.	User Authentication:

@@ -16,10 +16,11 @@ return(
             <Text style={styles.paraText}>Capture the world through your lens with Travel Diaries. Your stories, your adventures, all in one place
             </Text>
             </View>
+            <View style={{position:'absolute',width:'100%'}}>
         <TouchableOpacity onPress={()=>navigation.navigate("Login")} style={styles.buttonBg}>
             <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
-       
+        </View>
     </View>
 
 )
@@ -57,19 +58,21 @@ paraText:{
     left:20,
 },
 buttonBg:{
-    position:'absolute',
     backgroundColor:'#052659',
-    width:'90%',
     borderRadius:10,
-   marginHorizontal:20,
     padding:20,
-    bottom:20,
-    borderRadius:30,
+    borderRadius:50,
+    height:50,
+    margin:12,
     
   },
   buttonText:{
     color:'white',
     textAlign:'center',
+    position:'absolute',
+    left:'42%',
+    top:12,
+    fontSize:18
   }
 
 })

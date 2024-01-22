@@ -1,5 +1,4 @@
 import {View,StyleSheet,Text,TouchableOpacity,Image, TextInput } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
 
 export default function LoginScreen(){
@@ -10,12 +9,7 @@ export default function LoginScreen(){
      style={styles.bgImage}
     source={require('../assets/login_signup.png')}/>
      <View>
-     <LinearGradient
-            colors={['transparent', 'rgba(3,105,161,0.8)']}
-            start={{x: 0.5, y: 0}}
-            end={{x: 0.5, y: 1}}
-            style={styles.gradient}
-        />
+     
             <Text style={styles.headingText}>Welcome to TRAVEL DIARIES</Text>
             </View>
             {/* text input */}
@@ -80,12 +74,7 @@ const styles = StyleSheet.create({
         height:'100%',
         width:'100%',
     },
-    gradient:{
-        position:'absolute',
-        bottom:0,
-        width:'100%',
-        height:'100%'
-    },
+   
     loginbtn:{
         backgroundColor:'#527DBE',
         borderRadius:10,

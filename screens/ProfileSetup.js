@@ -1,9 +1,15 @@
 import { useNavigation } from '@react-navigation/native'
 import {View,StyleSheet,Text,TouchableOpacity,Image, TextInput, SafeAreaView } from 'react-native'
+import CustomImagePicker from "../components/ImagePickFunction";
+
 
 
 
 export default function ProfileSetup(){
+  const handleImageSelected = (uri) => {
+    // Handle the selected image URI as needed
+    console.log('Selected Image URI:', uri);
+  };
 const navigation= useNavigation()
 return(
 
@@ -16,16 +22,17 @@ return(
     <Text style={styles.topHeading}>Setup your profile</Text>
     </View>
     {/* image */}
-    <TouchableOpacity>
-            <Image source={require('../assets/avatar.png')} style={styles.avatar} />
-          </TouchableOpacity>
+    <View>
+         <Image />
+         <CustomImagePicker onImageSelected={handleImageSelected} />
+        </View>
     {/* Button */}
 
 
     <View style={styles.profileContainer}>
         <Text style={styles.Text}>Enter a Valid username</Text>
         <TextInput style={styles.input} placeholder='@username'/>
-<TouchableOpacity style={styles.Signupbtn}>
+<TouchableOpacity style={styles.Signupbtn} onPress={()=>navigation.navigate('Home')}>
             <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
         </View>
@@ -40,7 +47,7 @@ const styles = StyleSheet.create({
     color:'white'
    },
    profileContainer:{
-    top:'50%'
+    top:20
    },
    avatar:{
     top:50,

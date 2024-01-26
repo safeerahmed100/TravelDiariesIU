@@ -7,11 +7,13 @@ import TopNavigation from '../components/TopNavigation'
 
 
 
-export default function HomeScreen(){
+export default function HomeScreen({route}){
+  const {email} = route.params;
+
   const home='Home'
     return(
         <SafeAreaView style={styles.bgScreen}>
-          <TopNavigation screenName={home}/>
+          <TopNavigation screenName={home} route={route}/>
              <View style={{top:55,marginHorizontal:20}}>
           <View style={{backgroundColor:'#5483B3',flexDirection:'row',alignItems:'center',borderRadius:20,paddingHorizontal:10,height:44,}} >
             <MagnifyingGlass size={20} strokeWidth={3} color="lightgray" />

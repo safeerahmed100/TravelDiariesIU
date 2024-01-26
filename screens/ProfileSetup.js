@@ -1,16 +1,78 @@
 import { useNavigation } from '@react-navigation/native'
 import {View,StyleSheet,Text,TouchableOpacity,Image, TextInput, SafeAreaView } from 'react-native'
-import CustomImagePicker from "../components/ImagePickFunction";
+import { useState } from 'react';
+import * as ImagePicker from 'expo-image-picker';
+
+
+export default function ProfileSetup({route}){
+  const {email} = route.params;
+  const navigation= useNavigation()
+  const [username,setUsername]=useState('')
+  const [image, setImage] = useState(null);
 
 
 
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-export default function ProfileSetup(){
-  const handleImageSelected = (uri) => {
-    // Handle the selected image URI as needed
-    console.log('Selected Image URI:', uri);
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
   };
-const navigation= useNavigation()
+
+  const sendProfileSetupData = async()=>{
+      try{
+        if(!image){
+          alert("Select Image First");
+        return;
+      
+      }
+      const formData = new FormData();
+    formData.append('email', email);
+    formData.append('username', username);
+    formData.append('profilePicture', {
+      uri: image,
+      type: 'image/jpeg', // or the actual type of your image
+      name: new Date() + '_profile',
+    });
+
+        console.log(image)
+        const response = await fetch('http://192.168.1.108:3000/profile',{
+        method:'POST',
+        headers:{
+          'Content-Type':'multipart/form-data',
+        },
+        body: formData
+      }
+          )
+          const data = await response.json();
+  
+      if (response.ok) {
+        // Signup successful, navigate to Profile
+        navigation.navigate('Home',{email});
+      } else {
+        // Signup failed, display error message
+        alert(data.message);
+      }
+    } catch (error) {
+      // Handle network or other errors
+      console.error('Error:', error);
+      alert('An error occurred during signup');
+    }
+   
+    }
+ 
+  
+      
+
 return(
 
     <SafeAreaView style={styles.background}>
@@ -22,17 +84,21 @@ return(
     <Text style={styles.topHeading}>Setup your profile</Text>
     </View>
     {/* image */}
-    <View>
-         <Image />
-         <CustomImagePicker onImageSelected={handleImageSelected} />
-        </View>
+    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+      
+      <Image source={{ uri: image }} style={{ width: 200, height: 200,borderRadius:20,margin:20,backgroundColor:'white' }} />
+      <TouchableOpacity onPress={pickImage} style={{backgroundColor:'#527DBE',borderRadius:12,height:44,width:'100%',marginHorizontal:20}}><Text style={{alignItems:'center',color:'white',textAlign:'center',top:'25%'}}>Upload Image</Text></TouchableOpacity>
+    </View>
     {/* Button */}
 
 
     <View style={styles.profileContainer}>
+        <TextInput style={styles.input} placeholder='Email' 
+         value={email}/>
         <Text style={styles.Text}>Enter a Valid username</Text>
-        <TextInput style={styles.input} placeholder='@username'/>
-<TouchableOpacity style={styles.Signupbtn} onPress={()=>navigation.navigate('Home')}>
+        <TextInput style={styles.input} placeholder='@username'  onChangeText={(text) => setUsername(text)}
+        value={username}/>
+<TouchableOpacity style={styles.Signupbtn} onPress={sendProfileSetupData}>
             <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
         </View>

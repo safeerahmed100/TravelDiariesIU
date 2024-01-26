@@ -20,7 +20,7 @@ export default function CreateJournal(){
          <CustomImagePicker onImageSelected={handleImageSelected} />
         </View>
 
-<View stlye={{marginTop:50}}>
+<View style={{marginTop:30}}>
     {/* Form Fields*/}
     <Text style={{color:'white',fontWeight:'bold',margin:20}}>Caption</Text>
     <TextInput style={{backgroundColor:'white',borderRadius:20,height:77}}/>

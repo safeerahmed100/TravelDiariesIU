@@ -1,8 +1,55 @@
 import {View,StyleSheet,Text,TouchableOpacity,Image, TextInput } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { useState } from 'react'
 
 export default function SignupScreen(){
-    const navigation=useNavigation()
+
+const [firstname,setFirstname]=useState('');
+const [lastname,setLastname]=useState('');
+const [email,setEmail]=useState('');
+const [password,setPassword]=useState('');
+const navigation=useNavigation()
+
+
+const handleSignup = async () => {
+  if(firstname.length> 0 && lastname.length> 0 && email.length> 0 && password.length> 0)
+    try {
+     
+      const response = await fetch('http://192.168.1.108:3000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          firstname: firstname,
+          lastname: lastname,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        // Signup successful, navigate to Profile
+        navigation.navigate('Profile',{email});
+      } else {
+        // Signup failed, display error message
+        alert(data.message || 'Signup failed');
+      }
+    } catch (error) {
+      // Handle network or other errors
+      console.error('Error during signup:', error);
+      alert('An error occurred during signup');
+    }
+    else{
+      alert("Fill All the Required fields")
+    }
+  };
+  
+
+
+
     return(
 <View style={styles.container}>
     <Image 
@@ -16,15 +63,15 @@ export default function SignupScreen(){
             <View style={styles.inputStyle}>
                 <Text style={styles.inputlabel}>SIGNUP</Text>
                 <View style={styles.inlineInput}>   
-                    <TextInput style={styles.inputHalf} placeholder='First Name'/>
-                    <TextInput style={styles.inputHalf} placeholder='Last Name'/>
+                    <TextInput style={styles.inputHalf} onChangeText={(text)=>setFirstname(text)}  value={firstname} placeholder='First Name'/>
+                    <TextInput style={styles.inputHalf} onChangeText={(text)=>setLastname(text)}  value={lastname} placeholder='Last Name'/>
                     </View>
                     <View>
-                    <TextInput style={styles.input} placeholder='Email or phone number'/>
-                    <TextInput style={styles.input} placeholder='password'/>
+                    <TextInput style={styles.input} onChangeText={(text)=>setEmail(text)}  value={email} placeholder='Email or phone number'/>
+                    <TextInput style={styles.input} onChangeText={(text)=>setPassword(text)}  value={password} secureTextEntry={true} placeholder='password'/>
 
                     </View>
-                <TouchableOpacity onPress={()=>navigation.navigate("Profile")} style={styles.loginbtn}>
+                <TouchableOpacity onPress={handleSignup} style={styles.loginbtn}>
             <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
             <View>

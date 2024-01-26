@@ -1,8 +1,50 @@
 import {View,StyleSheet,Text,TouchableOpacity,Image, TextInput } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { useState } from 'react'
 
 export default function LoginScreen(){
+    const [email,setEmail]=useState('')
+    const [password,setPassword]= useState('')
     const navigation=useNavigation()
+
+
+    const handleLoginLogic = async () => {
+
+      if(email.length>0 && password.length>0){
+        try {
+          const response = await fetch('http://192.168.1.108:3000/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: email,
+              password: password,
+            }),
+          });
+      
+          const data = await response.json();
+      
+          if (response.ok) {
+            // Authentication successful, navigate to Home
+            navigation.navigate('Home',{email});
+          } else {
+            // Authentication failed, display error message
+            alert(data.message || 'Wrong Credentials');
+          }
+        } catch (error) {
+          // Handle network or other errors
+          console.error('Error during login:', error);
+          alert('An error occurred during login');
+        }
+      }
+      else{
+        alert("Enter Email and Password")
+      }
+      };
+
+
+
     return(
 <View style={styles.container}>
     <Image 
@@ -15,10 +57,11 @@ export default function LoginScreen(){
             {/* text input */}
             <View style={styles.inputStyle}>
                 <Text style={styles.inputlabel}>LOGIN</Text>      
-                    <TextInput style={styles.input} placeholder='Email or phone number'/>
-                    <TextInput style={styles.input} placeholder='password'/>
+                    <TextInput style={styles.input} onChangeText={(text)=>setEmail(text)}  value={email}
+placeholder='Email or phone number'/>
+                    <TextInput style={styles.input} onChangeText={(text)=>setPassword(text)}  secureTextEntry={true} value={password} placeholder='password'/>
                 <Text style={styles.inputlabel}>Forgot Password?</Text>      
-                <TouchableOpacity onPress={()=>navigation.navigate("Login")} style={styles.loginbtn}>
+                <TouchableOpacity onPress={handleLoginLogic} style={styles.loginbtn}>
             <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
             <View>

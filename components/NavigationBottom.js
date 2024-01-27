@@ -3,23 +3,25 @@ import { MapPinIcon, UserCircleIcon,HomeIcon } from 'react-native-heroicons/outl
 import { useNavigation } from '@react-navigation/native'
 
 
-export default function NavigationBottom() {
+export default function NavigationBottom({route}) {
+    const { email } = route.params;
+
     const navigation=useNavigation()
     return (
         <View style={styles.drawer}>
-            <TouchableOpacity onPress={()=>navigation.navigate('Home')}>
+            <TouchableOpacity onPress={()=>navigation.navigate('Home',{email})}>
             <View style={styles.menu}>
                 <HomeIcon size={30} strokeWidth={1} color="white" />
                 <Text style={styles.menuText} >Home</Text>
             </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>navigation.navigate('Map')} >
+            <TouchableOpacity onPress={()=>navigation.navigate('Map',{email})} >
             <View style={styles.menu}>
                 <MapPinIcon size={30} strokeWidth={1} color="white"/>
                 <Text style={styles.menuText} >Map</Text>
             </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>navigation.navigate('Journal')}>
+            <TouchableOpacity onPress={()=>navigation.navigate('Journal',{email})}>
             <View style={styles.menu}>
                 <UserCircleIcon
                 size={30} strokeWidth={1} color="white" />

@@ -23,9 +23,9 @@ export default function ProfileSetup({route}){
 
     console.log(result);
 
-    if (!result.canceled) {
+   
       setImage(result.assets[0].uri);
-    }
+    
   };
 
   const sendProfileSetupData = async()=>{
@@ -41,11 +41,11 @@ export default function ProfileSetup({route}){
     formData.append('profilePicture', {
       uri: image,
       type: 'image/jpeg', // or the actual type of your image
-      name: new Date() + '_profile',
+      name:  Math.random()+'_profile'+'.png',
     });
 
         console.log(image)
-        const response = await fetch('http://192.168.1.108:3000/profile',{
+        const response = await fetch('http://192.168.1.100:3000/profile',{
         method:'POST',
         headers:{
           'Content-Type':'multipart/form-data',
@@ -78,7 +78,7 @@ return(
     <SafeAreaView style={styles.background}>
     {/* Top */}
     <View style={{alignItems:'center',flexDirection:'row',marginHorizontal:22}}>
-    <TouchableOpacity onPress={()=>navigation.navigate("Signup")}>
+    <TouchableOpacity style={{opacity:0}} onPress={()=>navigation.navigate("Signup")}>
     <Image source={require('../assets/Arrow.png')}/>
     </TouchableOpacity>
     <Text style={styles.topHeading}>Setup your profile</Text>

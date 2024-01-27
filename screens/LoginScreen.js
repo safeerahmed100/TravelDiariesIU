@@ -12,7 +12,7 @@ export default function LoginScreen(){
 
       if(email.length>0 && password.length>0){
         try {
-          const response = await fetch('http://192.168.1.108:3000/login', {
+          const response = await fetch('http://192.168.1.100:3000/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

@@ -4,11 +4,22 @@ import { MagnifyingGlassIcon as MagnifyingGlass } from 'react-native-heroicons/o
 import Card from '../components/Card'
 import NavigationBottom from '../components/NavigationBottom'
 import TopNavigation from '../components/TopNavigation'
-
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 
 export default function HomeScreen({route}){
   const {email} = route.params;
+  const[postDetails,setPostDetails]=useState()
+
+  useEffect(()=>{
+    let url = 'http://192.168.1.100:3000/api/users';
+    axios.get(url).then((res)=>{
+setPostDetails(res.data)
+});
+
+},[])
+
 
   const home='Home'
     return(
@@ -20,24 +31,24 @@ export default function HomeScreen({route}){
             <TextInput
             style={{marginLeft:20}}
               placeholder='Search destination'
-              placeholderTextColor={'lightgrey'}
-              
-            />
+              placeholderTextColor={'lightgrey'} />
           </View>
+
         </View>
         <Text style={{color:'white',top:80,marginLeft:20,fontWeight:'bold',fontSize:18}}>Treding Places</Text>
-       <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={{top:'22%'}}>
-        <Card/>
-        <Card/>
-        <Card/>
+       <ScrollView contentContainerStyle={{justifyContent:'center',alignItems:'center'}} showsHorizontalScrollIndicator={false} horizontal={false} style={{top:'12%'}}>
+       {/* {postDetails && postDetails.postImage && postDetails.caption && postDetails.location ? (
+
+<Card location={postDetails.location} caption={postDetails.caption} postImage={postDetails.postImage}/>
+
+       ):(<View style={{display:'none'}}></View>)} */}
+
+
+{postDetails && postDetails.users && postDetails.users.map((user) => (
+
+<Card key={user._id} username={user.username} location={user.location} caption={user.caption} postImageDestination={user.postImage.destination} postDetailsPath={user.postImage.filename} />))}
        </ScrollView>
-       <Text style={{color:'white',top:40,marginLeft:20,fontWeight:'bold',fontSize:18}}>Blogs</Text>
-       <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={{top:'12%'}}>
-        <Card/>
-        <Card/>
-        <Card/>
-       </ScrollView>
-       <NavigationBottom/>
+       <NavigationBottom route={route}/>
         </SafeAreaView>
     )
 }
@@ -51,7 +62,7 @@ bgScreen:{
     width:'100%'
 },
 Card:{
-    top:'30%'
+    top:'10%'
    
 },
     

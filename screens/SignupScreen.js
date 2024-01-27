@@ -15,7 +15,7 @@ const handleSignup = async () => {
   if(firstname.length> 0 && lastname.length> 0 && email.length> 0 && password.length> 0)
     try {
      
-      const response = await fetch('http://192.168.1.108:3000/signup', {
+      const response = await fetch('http://192.168.1.100:3000/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
